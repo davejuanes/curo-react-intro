@@ -83,7 +83,7 @@ Ahora debajo del `div`, agregamos un componente `<TodoCounter />`
 <TodoList/>
 ```
 Luego al final agregamos el boton `<CreateTodoButton />`.
-Ahora toca crear los componentes que fuimos construyendo (En el caso de tener el error por React debemos importarlo también se puede usar el shorcout `imr` ojo que necesita tener la extensión de react):
+Ahora toca crear los componentes que fuimos construyendo (En el caso de tener el error por React debemos importarlo también se puede usar el shortcut `imr` ojo que necesita tener la extensión de react):
 ### Componente TodoCounter
 ```
 import React from 'react'
@@ -181,14 +181,59 @@ function App() {
 
 export default App;
 ```
+# Clase 4 Como se comunican los componentes? Props y atributos
+Nuestro componente TodoCounter recibira 2 propiedades destructuras `total, completed`, modificamos el componente de manera de el texto hardcodeado quede asi `{completed}` y `{total}` para hacer dinamico nuestro componente.
 
+Ahora dentro del componente `App.js` donde invocamos al componente TodoCounter lo definimos: `<TodoCounter completed={16} total={25}/>`.
+Estos cambios podemos verlos con las devtools del navegador ya que las props no se muestran como atributos en el HTML.
 
+### Propiedad Children
+React automaticamente define como elementos hijo a los componentes y/o elementos que estan dentro de dos etiquedas `jsx`.
 
-
-
-
-
-
+### React.Fragment
+Por defecto todo componente require ser exportado a un solo objeto, por esto es que los componentes deben estar encapsulados en una etiqueta:
+```
+<React.Fragment>
+  ...
+  ...
+  ...
+</React.Fragment>
+```
+### Envio de arrays
+Para poder enviar array definimos:
+```
+const defaultTodos = [
+  { text: 'Diseño de proyecto', completed: false},
+  { text: 'Diseño de Base de datos', completed: false},
+  { text: 'Recopilación de requerimientos', completed: false},
+  { text: 'Desarrollo', completed: false},
+  { text: 'Implementación', completed: false},
+]
+```
+Y luego dentro de nuestro componente `App` vamos definiendo las props que necesitaremos ver con `TodoItem`:
+```
+<TodoList>
+  {defaultTodos.map(todo => (
+    <TodoItem
+      key={todo.text}
+      text={todo.text}
+      completed={todo.completed}
+    />
+  ))}
+</TodoList>
+```
+Ahora en `TodoItem` iremos definiendo las props que necesitaremos (en mi caso tuve que destructurarlas por unos errores que me mostraban las devtools):
+```
+function TodoItem({text, completed}) {
+  return (
+    <li>
+      <span>V {completed}</span>
+      <p>{text}</p>
+      <span>X</span>
+    </li>
+  );
+}
+```
 
 
 
