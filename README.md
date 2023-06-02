@@ -234,10 +234,33 @@ function TodoItem({text, completed}) {
   );
 }
 ```
+# Clase 5 Estilos CSS en React
 
-
-
-
+La forma de utilizar los estilos en react es mediante objetos, debemos usar los estilo como objetos definidos como variables:
+```
+const estilos = {
+  backgroundColor: 'red'
+}
+function TodoCounter({ total, completed }) {
+  return <h1 style={estilos}>Haz completado {completed} de {total} TODOS</h1>;
+}
+```
+Tambien podemos definir estilos directamente en el `JSX` con doble llave `{{  }}`, esto porque JSX nos permite usar javascript dentro de llaves y como enviamos otro objeto entre llaves tambien. Ademas React por defecto los valores numericos sin especificar el tipo fijo o relativo los pone en pixels, asi que es mejor definir las unidades que vayamos a usar.
+De la otra manera importando un archivo `.css`, es mas sencillo usamos CSS normal en un archivo especifico
+TodoCounter.css
+```
+h1 {
+  font-size: "24px";
+  text-align: "center";
+  margin: 0;
+  padding: "48px";
+}
+```
+Import en TodoCounter.js
+```
+import './TodoCounter.css';
+```
+Y listo con eso el proyecto sigue identico.
 
 
 
