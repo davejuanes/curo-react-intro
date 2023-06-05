@@ -1,0 +1,34 @@
+.container_search {
+  display: flex;
+  margin-top: 16px;
+  text-align: center;
+  display: inline-block;
+}
+input[type="search"] {
+  font-size: 16px;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 20px;
+  width: 400px;
+  padding: 4px; /* Overridden by padding: 1px; */
+  font-family: Georgia; /* Overridden by font: -webkit-small-control; */
+  border: 2px solid white; /* Overridden by border: 2px inset; */
+  border-radius: 25px;
+  background: rgba(
+    0,
+    255,
+    234,
+    0.13
+  ); /* Overridden by background-color: white; */
+  line-height: 3; /* Irrelevant, I guess */
+  cursor: pointer;
+  outline: none;
+  float: left;
+  box-sizing: border-box;
+  transition: all 0.15s;
+}
+::-webkit-input-placeholder {
+  font-size: 16px;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
