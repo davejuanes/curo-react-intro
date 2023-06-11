@@ -7,7 +7,7 @@
 input[type="search"] {
   font-size: 16px;
   color: white;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Montserrat, Helvetica, sans-serif;
   font-weight: 20px;
   width: 400px;
   padding: 4px; /* Overridden by padding: 1px; */
@@ -31,4 +31,12 @@ input[type="search"] {
   font-size: 16px;
   color: white;
   font-family: Arial, Helvetica, sans-serif;
+}
+input[type="search"]::placeholder {
+  color: white;
+  font-family: Montserrat;
+}
+
+input[type="search"]:focus {
+  outline-color: aquamarine;
 }

@@ -6,7 +6,7 @@ function TodoCounter({ total, completed }) {
     <>
       <div className="container">
         <h1>
-          Haz completado {completed} de {total} TODO's
+          Haz completado <span>{completed}</span> de <span>{total}</span> TODO's
         </h1>
         ;
       </div>

@@ -6,7 +6,7 @@ import { TodoItem } from "./TodoItem";
 import { CreateTodoButton } from "./CreateTodoButton";
 
 const defaultTodos = [
-  { text: 'Diseño de proyecto', completed: false},
+  { text: 'Diseño de proyecto', completed: true},
   { text: 'Diseño de Base de datos', completed: false},
   { text: 'Recopilación de requerimientos', completed: false},
   { text: 'Desarrollo', completed: false},
