@@ -262,8 +262,224 @@ import './TodoCounter.css';
 ```
 Y listo con eso el proyecto sigue identico.
 
+Los estilos agregados en el codigo los adjunto:
+```
+<!-- CreateTodoButton -->
+.create-button {
+  width: 60px;
+  height: 60px;
+  background-color: rgba(9, 121, 118, 1);
+  color: white;
+  border: solid 2px white;
+  border-radius: 40px;
+  font-size: 40px;
+  font-weight: 400;
+  position: absolute;
+  left: 280px;
+  transform: rotate(0);
+  transition: .3s ease;
+}
 
+.create-button:hover {
+  transform: rotate(224deg);
+}
+<!-- // index.css -->
+body {
+  font-size: 10px;
+  font-family: Montserrat, sans-serif;
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(9, 121, 118, 1) 35%,
+    rgba(0, 212, 255, 1) 100%
+  );
+  margin: 0;
+  display: grid;
+  height: 100vh;
+  place-items: center;
+  text-align: center;
+  justify-content: center;
+  /* display: inline-block; */
+}
 
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+<!-- // TodoCounter.css -->
+h1 {
+  font-family: Montserrat, Arial, Helvetica, sans-serif;
+  color: white;
+  font-size: 36px;
+  text-align: center;
+  margin: 0;
+  padding: 48px;
+  text-shadow: 30px;
+  z-index: 1;
+  padding: 20px;
+  font-weight: normal;
+}
+.container {
+  z-index: 0;
+}
+h1 span {
+  font-weight: bold;
+}
+<!-- // TodoItem.css -->
+li {
+    list-style: none;
+    position: relative;
+    align-items: center;
+}
+.todo-text {
+  position: absolute;
+  color: white;
+  font-size: 24px;
+  margin: 20px;
+  position: relative;
+  margin: 4px;
+  border: 3px solid white;
+  border-radius: 12px;
+  width: 500px;
+  height: 50px;
+  vertical-align: sub;
+}
+.check {
+  width: 25px;
+  height: 25px;
+  border: 2px solid white;
+  border-radius: 40px;
+  padding: 4px;
+  display: flex;
+  flex-direction: row;
+  color: white;
+  font-size: 20px;
+  text-align: center;
+  align-content: center;
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  bottom: 0;
+}
+.icon-check {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  bottom: 0;
+}
+
+.decline {
+  width: 25px;
+  height: 25px;
+  /* border: 2px solid white; */
+  /* border-radius: 40px; */
+  padding: 4px;
+  display: flex;
+  flex-direction: row;
+  color: white;
+  font-size: 20px;
+  text-align: center;
+  align-content: center;
+  position: absolute;
+  top: 10px;
+  right: 90px;
+  bottom: 0;
+}
+.icon-times {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  bottom: 0;
+}
+.decline:hover {
+  /* border: red; */
+  /* border-radius: 40px; */
+  color: red;
+}
+
+.icon-check--active {
+  color: #4caf50;
+}
+
+.TodoItem-p--complete {
+  text-decoration: line-through;
+}
+<!-- // TodoSearch.css -->
+.container_search {
+  display: flex;
+  margin-top: 16px;
+  text-align: center;
+  display: inline-block;
+}
+input[type="search"] {
+  font-size: 16px;
+  color: white;
+  font-family: Montserrat, Helvetica, sans-serif;
+  font-weight: 20px;
+  width: 400px;
+  padding: 4px; /* Overridden by padding: 1px; */
+  font-family: Georgia; /* Overridden by font: -webkit-small-control; */
+  border: 2px solid white; /* Overridden by border: 2px inset; */
+  border-radius: 25px;
+  background: rgba(
+    0,
+    255,
+    234,
+    0.13
+  ); /* Overridden by background-color: white; */
+  line-height: 3; /* Irrelevant, I guess */
+  cursor: pointer;
+  outline: none;
+  float: left;
+  box-sizing: border-box;
+  transition: all 0.15s;
+}
+::-webkit-input-placeholder {
+  font-size: 16px;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+input[type="search"]::placeholder {
+  color: white;
+  font-family: Montserrat;
+}
+
+input[type="search"]:focus {
+  outline-color: aquamarine;
+}
+```
+
+Muchos de los estilos los probé y otros los añadí de acuerdo al codigo de Juan DC. Por otra parte instale la libreria React Icons con la categoria `fa`, para instalarlos utilicé `npm install react-icons --save` y la importación es:
+```
+import { FaCheck, FaTimes } from 'react-icons/fa';
+```
+## Envio de parametros para operadores ternarios
+Los operadores ternarios, son condicionales reducidas en este caso utilizados para el frond añadiendo clases definidad en el jsx:
+```
+<FaCheck className={`icon-check  ${completed && "icon-check--active"}`} />
+```
+Con los operadores ternarios, habilitamos las clases que ya se definen en los archivos `.css`.
+
+# Clase 6 - Evenctos en React: onClick, onChange
+Los eventos nos sirven para detectar acciones del usuario en interaccioón con nuestra aplicación. Estos eventos en React deben ser con CamelCase `onCLick` esto es un `addEventListener`.
+
+Para poder ejecutar estos eventos en React, se deben usar `arrow functions` con la estructura `() => {}` de esta manera React entiende y no ejecuta de manera inmediata las funciones.
+
+```
+<input type="search" placeholder="Search..."
+        onChange={(event) => {
+          console.log('Escribiste en el Todo Search')
+          console.log(event)
+          console.log(event.target);
+          console.log(event.target.value);
+        }} />
+```
+Dentro del fragmento de codigo podemos mostrar por consola el evento con las diferentes propiedades que necesitaremos en el buscador o para crear nuevos ToDo's.
+
+El evento como tal nos muestra la propiedad `SyntheticBaseEvent` que es contenedor de todas las propiedades del evento, siendo mas sepecifico `target` que nos muestra el elemento con el cual se esta interactuando y finalmente `value` que especificamente y en tiempo real nos muestra el valor enviado por el evento.
+# Clase 7 Que es el estado?
+El estado en React, también conocido como state, es el segundo tipo de dato que maneja esta librería de JavaScript. Mientras que las props son los datos que podemos pasarle a un componente o elemento React desde afuera, un estado se conforma por los datos internos que un componente puede manejar. (Keepcoding.io). 
 
 # Repositorio base del Curso de Introducción a React.js en Platzi
 
