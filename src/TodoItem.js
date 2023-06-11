@@ -1,16 +1,16 @@
 import React from "react";
 import './TodoItem.css';
-import { FaCheck } from 'react-icons/fa';
+import { FaCheck, FaTimes } from 'react-icons/fa';
 
 function TodoItem({text, completed}) {
   return (
     <li>
-      <span>
+      <span className="check">
         <FaCheck className="icon-check" />
       </span>
-      <p>New todo for styles</p>
-      <span>
-        {/* <FaTimes className="icon-times" /> */}
+      <p className="todo-text">New todo for styles</p>
+      <span className="decline">
+        <FaTimes className="icon-times" />
       </span>
     </li>
   );
