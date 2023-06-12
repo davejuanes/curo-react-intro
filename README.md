@@ -479,7 +479,38 @@ Dentro del fragmento de codigo podemos mostrar por consola el evento con las dif
 
 El evento como tal nos muestra la propiedad `SyntheticBaseEvent` que es contenedor de todas las propiedades del evento, siendo mas sepecifico `target` que nos muestra el elemento con el cual se esta interactuando y finalmente `value` que especificamente y en tiempo real nos muestra el valor enviado por el evento.
 # Clase 7 Que es el estado?
-El estado en React, también conocido como state, es el segundo tipo de dato que maneja esta librería de JavaScript. Mientras que las props son los datos que podemos pasarle a un componente o elemento React desde afuera, un estado se conforma por los datos internos que un componente puede manejar. (Keepcoding.io). 
+
+El estado en React, también conocido como state, es el segundo tipo de dato que maneja esta librería de JavaScript. Mientras que las props son los datos que podemos pasarle a un componente o elemento React desde afuera, un estado se conforma por los datos internos que un componente puede manejar. (Keepcoding.io).
+
+### Creación de un estado
+Primero se debe importar el estado desde React:
+```
+import React from "react";
+```
+Luego definimos la constante a la cual le asignaremos el estado:
+```
+const [searchValue, setSearchValue] = React.useState(); // Es una función por eso los ()
+```
+Este estado es inmutable, por lo tanto es una funcion controladora de estados. Por convención debe utilizar los dos parametros el primero es un controlador de estados y el segundo parametro actualizador enviado por `useState`. (Estos pueden cambiar de acuerdo a lo que se necesita).
+
+Luego necesitaremos un valor inicial que lo enviaremos al ejecutar la función `useState("")` y este lo conectaremos con el `input` enviandole la propiedad `value={searchValue}`.
+
+Ahora bien, para evitar errores una vez renderizados los componentes necesitamos enviar un valor por defecto al input de tipo `search` y dentro del evento `onChange` utilizamos el valor del texto ingresado por el usuario:
+```
+onChange={(event) => {
+  setSearchValue(event.target.value);
+}}
+```
+### Render React - DOM Virtual
+El render y el re render de React es una ejecución del motor de React automaticamente cuando detecta que el actualizador `useState` a cambiado. El motor de react crea un `Virtual DOM` el mismo que se compara con el DOM del navegador y unicamente re renderiza los componentes que que son diferentes. de esta forma funciona el motor de React.
+
+# Clase 8
+
+
+
+
+
+
 
 # Repositorio base del Curso de Introducción a React.js en Platzi
 

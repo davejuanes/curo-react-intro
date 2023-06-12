@@ -10,14 +10,28 @@ const defaultTodos = [
   { text: 'Diseño de Base de datos', completed: false},
   { text: 'Recopilación de requerimientos', completed: false},
   { text: 'Desarrollo', completed: false},
-  { text: 'Implementación', completed: false},
+  { text: 'Implementación', completed: true},
 ]
 
 function App() {
+  const [todos, setTodos] = React.useState(defaultTodos);
+  const [searchValue, setSearchValue] = React.useState('');
+  
+  const completedTodos = todos.filter(
+    todo => !!todo.completed
+    ).length;
+  const totalTodos = todos.length;
+
+  console.log('Los usuarios buscan todos de ' + searchValue);
+
   return (
     <React.Fragment>
-      <TodoCounter completed={16} total={25} />
-      <TodoSearch />
+      <TodoCounter 
+      completed={completedTodos} total={totalTodos} />
+      <TodoSearch 
+        searchValue={searchValue}
+        setSearchValue={setSearchValue}
+      />
 
       <TodoList>
         {defaultTodos.map(todo => (
