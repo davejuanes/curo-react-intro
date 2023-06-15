@@ -504,7 +504,97 @@ onChange={(event) => {
 ### Render React - DOM Virtual
 El render y el re render de React es una ejecución del motor de React automaticamente cuando detecta que el actualizador `useState` a cambiado. El motor de react crea un `Virtual DOM` el mismo que se compara con el DOM del navegador y unicamente re renderiza los componentes que que son diferentes. de esta forma funciona el motor de React.
 
-# Clase 8
+# Clase 8 - Contando TODO's
+Comunicacion entre componentes padres e hijos. Los estod sunicamente pueden compartirse entre padres e hijos.
+
+Necesitamos combinar los estados con los props, los estados deben estar en el componente padre, para esto cortaremos el codigo del componente `TodoSearch`:
+```
+const [searchValue, setSearchValue] = React.useState('');
+```
+Y lo pegamos en el componente App por ser este el padre, ahora en el componente `App` invocamos el componente `TodoSearch` pero debemos enviarle como `props` el estado y su actualizador:
+```
+<TodoSearch 
+  searchValue={searchValue}
+  setSearchValue={setSearchValue}
+/>
+```
+Ahora debemos destructurar las `props` desde el componente `TodoSearch`:
+```
+TodoSearch({
+  searchValue,
+  setSearchValue,
+})
+```
+Una vez pegado el codigo, podemos ver el resultado con un `console.log`:
+Output devtools:
+```
+Los usuarios buscan todos de l
+Los usuarios buscan todos de la
+Los usuarios buscan todos de las
+```
+Ahora para utilizar los datos en `JS` definimos una constante:
+```
+const [todos, setTodos] = React.useState(defaultTodos);
+```
+Definimos por defecto el array inicial dentro de `useState`. Luego definimos dos constantes para los Todos completados y el total de todos:
+```
+const completedTodos = todos.filter(
+  todo => !!todo.completed
+  ).length;
+const totalTodos = todos.length;
+```
+Dentro de este codigo definimos una constante completeTodos bajo el estado `todos` de `useState` donde debemos filtrar los todos completados para eso la manipulamos el array con `filter` y le decimos a React que manejaremos valores `Bool` con la doble admiración por delante de la propiedad `!!todo.complete` **Esto con la finalidad de usar True o False**, finalmente utilizamos `lenght` para definir la longitud del `array`.
+
+Finalmente enviamos estas `props` al componente `App`:
+```
+<TodoCounter 
+  completed={completedTodos}
+  total={totalTodos} 
+/>
+```
+Y listo nos muestra los completados y los totales.
+
+# Clase 9 - Buscando TODO's
+Para esta clase utilizaremos estados derivados, por lo tanto definimos una constante:
+```
+const searchedTodos = todos.filter(
+  (todo) => {
+    return todo.text.include(searchValue)
+  }
+)
+```
+Aqui lo que hacemos es buscar dentro de los textos de los todos el valor de searchValue creando un nuevo array con las coincidencias.
+
+Luego debemos cambiar el comportamiento de del componente `TodoList` para que trabaje con el nuevo array, cambiando el `defaultTodos` con `searchedTodos`:
+```
+<TodoList>
+  {searchedTodos.map(todo => (
+    <TodoItem
+      key={todo.text}
+      text={todo.text}
+      completed={todo.completed}
+    />
+  ))}
+</TodoList>
+```
+Esto ya funciona, pero tiene un detalle no reconoce mayusculas o minusculas de acuerdo como busquemos, asi que lo que haremos es optimizar la busqueda para que del lado de la logica comvierta todo el texto en minusculas:
+```
+const searchedTodos = todos.filter(
+  (todo) => {
+    return todo.text.toLowerCase().include(searchValue.toLowerCase())
+  }
+)
+```
+Ahora optimizamos el codigo:
+```
+const searchedTodos = todos.filter(
+  (todo) => {
+    const todoText = todo.text.toLowerCase();
+    const searchText = searchValue.toLowerCase();
+    return todoText.includes(searchValue);
+  }
+)
+```
 
 
 
