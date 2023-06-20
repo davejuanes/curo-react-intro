@@ -1,17 +1,17 @@
 import React from "react";
-import './TodoItem.css';
-import { FaCheck, FaTimes } from 'react-icons/fa';
+import { CompleteIcon } from "./CompleteIcon";
+import { DeleteIcon } from "./DeleteIcon";
+import "./TodoItem.css";
+// import { FaCheck, FaTimes } from "react-icons/fa";
 
-function TodoItem({text, completed}) {
+function TodoItem(props) {
   return (
-    <li>
-      <span className="check">
-        <FaCheck className={`icon-check  ${completed && "icon-check--active"}`} />
-      </span>
-      <p className={`todo-text ${completed && "TodoItem-p--complete"}`}>{text}</p>
-      <span className="decline">
-        <FaTimes className="icon-times" />
-      </span>
+    <li className="TodoItem">
+      <CompleteIcon completed={props.completed} onComplete={props.onComplete} />
+      <p className={`TodoItem-p ${props.completed && "TodoItem-p--complete"}`}>
+        {props.text}
+      </p>
+      <DeleteIcon onDelete={props.onDelete} />
     </li>
   );
 }

@@ -591,10 +591,216 @@ const searchedTodos = todos.filter(
   (todo) => {
     const todoText = todo.text.toLowerCase();
     const searchText = searchValue.toLowerCase();
-    return todoText.includes(searchValue);
+    return todoText.includes(searchText);
   }
 )
 ```
+# Clase 10 Completando y eliminando TODO's
+
+Lo primero en hacer es completar los TODO's, para esto utilizamos el useState de React cambiando el estado del componente con la propiedad `completed={todo.completed}`, luego debemos enviarle un actualizador de estado creando un evento propio con `onComplete={completeTodo}` al componente `todoItem`.
+
+Luego crearemos la constante completeTodo del parametro enviado al componente:
+```
+const completeTodo = (text) => {
+  const newTodos = [...todos];
+  const todoIndex = newTodos.findIndex(
+    (todo) => todo.text === text
+  );
+  newTodos[todoIndex].completed = true;
+  setTodos(newTodos);
+  console.log('Hola llego aquí');
+}
+```
+Una ves definida la constante como parametro enviamos `text` por ser nuestra clave en el caso de los Todo's, luego usamos la expresión extendida de JS con `...` es decir traeremos todo el array `todos` para crear un nuevo array. En la siguiente linea hacemos un filtro por el `Index` que definimos para obtener el `todo` que estamos buscando. En el nuevo elemento encontrado lo definimos con el estado `completed` como `true` y definimos el array original con el nuevo, finalmente enviamos un `console.log` para verificar que el estado se modifico de acuerdo a nuestra logica.
+
+Ahora para poder definir la ejecución de la función inicialmente utilizamos el siguiente codigo:
+```
+<TodoList>
+  {searchedTodos.map(todo => (
+    <TodoItem
+      key={todo.text}
+      text={todo.text}
+      completed={todo.completed}
+      onComplete={completeTodo(todo.text)}
+    />
+  ))}
+</TodoList>
+```
+El problema con esta función es que genera un `re render` que rompe la aplicación por su autoejecución dentro del codigo sin tener el parametro `text`, por lo tanto lo que se tiene que corregir es:
+```
+<TodoList>
+  {searchedTodos.map(todo => (
+    <TodoItem
+      key={todo.text}
+      text={todo.text}
+      completed={todo.completed}
+      onComplete={() => completeTodo(todo.text)}
+    />
+  ))}
+</TodoList>
+```
+Encapsulando la función dentro de otra asi se ejecuta unicamente cuando es encesario y no cuando se renderiza la aplicación.
+
+Hasta esta parte todo bien, ahora toca hacer el metodo `delete`, por lo tanto usaremos el mismo codigo de `completed`:
+```
+<TodoList>
+  {searchedTodos.map(todo => (
+    <TodoItem
+      key={todo.text}
+      text={todo.text}
+      completed={todo.completed}
+      onComplete={() => completeTodo(todo.text)}
+      onDelete={() => deleteTodo(todo.text)}
+    />
+  ))}
+</TodoList>
+```
+Enviamos la función `onDelete` con el texto como parametro, luego definimos la función:
+```
+const deleteTodo = (text) => {
+  const newTodos = [...todos];
+  const todoIndex = newTodos.findIndex(
+    (todo) => todo.text === text
+  );
+  newTodos.splice(todoIndex, 1)
+  setTodos(newTodos);
+  console.log('Hola llego aquí');
+}
+```
+Y dentro de nuestro componente `TodoItem` enviamos la función `onClick`:
+```
+<span
+  className="Icon Icon-delete"
+  onClick={props.onDelete}
+>
+  X
+</span>
+```
+Si realizamos los pasos tal como estan descritos la aplicación deberia función de forma interactiva!!!!!!
+
+# Clase 11 - Iconos en React: librerías y SVG
+Primero usaramos los `react-icons` bastante comoda y facil desde varias librerias y formatos:
+```
+npm install react-icons --save
+```
+Y la manera de usarlos es bastante sencilla, primero debemos importar el icono:
+```
+import { FaBeer } from 'react-icons/fa';
+```
+Y luego dentro del codigo lo usamos como si fuera un componente:
+```
+return <h3> Lets go for a <FaBeer />? </h3>
+```
+Pero en la clase usaremos los iconos hechos por el Team Platzi!.
+
+Bueno lo primero es definir dos archivos con los nombres de los iconos:
+CompleteIcon.js:
+```
+import React from "react";
+import { TodoIcon } from './TodoIcon';
+
+function CompleteIcon({ completed, onComplete }) {
+  return (
+    <TodoIcon
+      type="check"
+      color={completed ? "green" : "gray"}
+      onClick={onComplete}
+    />
+  );
+}
+
+export { CompleteIcon };
+```
+Y DeleteIcon.js:
+```
+import React from "react";
+import { TodoIcon } from "./TodoIcon";
+
+function DeleteIcon({ onDelete }) {
+  return <TodoIcon type="delete" color="gray" onClick={onDelete} />;
+}
+export { DeleteIcon };
+```
+Ahora debemos, crear un 3er archivos `TodoIcon.js`, dentro de este importamos los svg del TeamPLatzi (que tambien deben estar dentro de un archivo independiente) con los nombres de `check.svg`:
+```
+<svg viewBox="0 0 405.272 405.272" xml:space="preserve">
+<path d="M393.401,124.425L179.603,338.208c-15.832,15.835-41.514,15.835-57.361,0L11.878,227.836 c-15.838-15.835-15.838-41.52,0-57.358c15.841-15.841,41.521-15.841,57.355-0.006l81.698,81.699L336.037,67.064 c15.841-15.841,41.523-15.829,57.358,0C409.23,82.902,409.23,108.578,393.401,124.425z"/>
+</svg>
+```
+Y `delete.svg`:
+```
+<svg viewBox="0 0 348.333 348.334" xml:space="preserve">
+<path d="M336.559,68.611L231.016,174.165l105.543,105.549c15.699,15.705,15.699,41.145,0,56.85 c-7.844,7.844-18.128,11.769-28.407,11.769c-10.296,0-20.581-3.919-28.419-11.769L174.167,231.003L68.609,336.563 c-7.843,7.844-18.128,11.769-28.416,11.769c-10.285,0-20.563-3.919-28.413-11.769c-15.699-15.698-15.699-41.139,0-56.85 l105.54-105.549L11.774,68.611c-15.699-15.699-15.699-41.145,0-56.844c15.696-15.687,41.127-15.687,56.829,0l105.563,105.554 L279.721,11.767c15.705-15.687,41.139-15.687,56.832,0C352.258,27.466,352.258,52.912,336.559,68.611z"/>
+</svg>
+```
+Y el archivo `TodoIcon` tambien lo creamos conjuntamente con su `.css`:
+TodoIcon.js:
+```
+import { ReactComponent as CheckSVG } from "./check.svg";
+import { ReactComponent as DeleteSVG } from "./delete.svg";
+import "./TodoIcon.css";
+
+const iconTypes = {
+  check: (color) => <CheckSVG className="Icon-svg" fill={color} />,
+  delete: (color) => <DeleteSVG className="Icon-svg" fill={color} />,
+};
+
+function TodoIcon({ type, color, onClick }) {
+  return (
+    <span className={`Icon-container Icon-container-${type}`} onClick={onClick}>
+      {iconTypes[type](color)}
+    </span>
+  );
+}
+
+export { TodoIcon };
+```
+TodoIcon.css:
+```
+.Icon-container {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 48px;
+    width: 48px;
+    font-size: 24px;
+    font-weight: bold;
+    /* background-color: #CCC; */
+  }
+  
+  .Icon-container-check {
+    position: absolute;
+    left: 12px;
+  }
+  .Icon-container-check--active {
+    color: #4caf50;
+  }
+  
+  .Icon-container-delete {
+    position: absolute;
+    top: -24px;
+    right: 0;
+  }
+  .Icon-container-delete:hover {
+    color: red;
+  }
+  
+  .Icon-svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .Icon-container-check:hover .Icon-svg {
+    fill: green;
+  }
+  .Icon-container-delete:hover .Icon-svg {
+    fill: red;
+  }
+```
+
+
+
 
 
 
