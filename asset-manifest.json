@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/curo-react-intro/static/css/main.a30f522e.css",
+    "main.js": "/curo-react-intro/static/js/main.d7ce4457.js",
+    "index.html": "/curo-react-intro/index.html",
+    "static/media/delete.svg": "/curo-react-intro/static/media/delete.67697f56fd2f149bc9515a879062ad5c.svg",
+    "static/media/check.svg": "/curo-react-intro/static/media/check.23109d14544b9bb9b3d5d4e65ea13701.svg",
+    "main.a30f522e.css.map": "/curo-react-intro/static/css/main.a30f522e.css.map",
+    "main.d7ce4457.js.map": "/curo-react-intro/static/js/main.d7ce4457.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a30f522e.css",
+    "static/js/main.d7ce4457.js"
+  ]
+}
